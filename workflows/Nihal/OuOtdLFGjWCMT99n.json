@@ -1,0 +1,334 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T11:06:47.313Z",
+  "id": "OuOtdLFGjWCMT99n",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Aboobecker",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Aboobecker. Tell me a topic to post in LinkedIn\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -20,
+        0
+      ],
+      "id": "095d3a8b-f00c-48f6-85c3-239f14f46356",
+      "name": "When chat message received",
+      "webhookId": "8d8097f7-d89b-47fc-a57f-c019e9dc4d2e"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Using the following user input: \"{{ $json.chatInput }}\", please perform the following steps:\n\nConduct thorough research on the topic using the research tool to ensure factual accuracy, professional relevance, and clarity. Focus on recent developments, real-world examples, or case studies where applicable.\n\nFrom the researched insights, generate:\n\nA concise and descriptive image prompt suitable for generating a professional-quality image that complements the topic.\n\nA well-written, professional LinkedIn post that includes:\n\nA strong hook in the first 1–2 lines to grab attention.\n\nClear context or problem statement.\n\nActionable or insightful main content written in a structured and readable format (use bullet points or short paragraphs).\n\nA practical takeaway or application.\n\nAn engagement prompt (optional but recommended).\n\n3–5 relevant hashtags to increase visibility.\n\nComply with LinkedIn formatting standards:\n\nMake sure that there are no ** capitalizations.\nUse Unicode-only text formatting (no Markdown or HTML).\n\nMaintain a professional tone with a conversational but respectful and insightful voice.\n\nUse the LinkedIn Uploader Tool to upload:\n\nThe image prompt for image generation and attachment.\n\nThe LinkedIn post content as the article caption or body.\n\nEnsure the final post provides genuine value to a professional audience and adheres to LinkedIn’s content standards.\n\nLinkedIn  uses unicode only so no other text formatting should be there",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        260,
+        0
+      ],
+      "id": "cd2126b7-ce38-40c7-949d-10d3a24db39c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        120,
+        220
+      ],
+      "id": "e58a47c3-078f-4246-ab4d-8f469cbb4698",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        0
+      ],
+      "id": "0492c5b9-4378-4a1e-9c19-6ae122b622e1",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "SRcspKinv5xleAGO",
+          "mode": "list",
+          "cachedResultName": "Researcher"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Topic": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Topic', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Topic"
+          ],
+          "schema": [
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        300,
+        220
+      ],
+      "id": "2fffb205-7069-41f1-b2da-e6af62656c4c",
+      "name": "Research Tool"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Image Prompt\": \"this is an image prompt\",\n    \"Post Article\": \"This is an article\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        420
+      ],
+      "id": "8ba02833-c7fb-410a-87ab-542c63eaea23",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        460,
+        220
+      ],
+      "id": "011c3d74-7b0e-4109-8bd1-bced482849b1",
+      "name": "Auto-fixing Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        460,
+        420
+      ],
+      "id": "bf22ee64-dbf7-44a1-943a-5a98f3bfe154",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qIcaWS7ugCD7dSO0",
+          "mode": "list",
+          "cachedResultName": "Linked in uploader"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Image Prompt": "={{ $json.output['Image Prompt'] }}",
+            "Post Article": "={{ $json.output['Post Article'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Image Prompt",
+              "displayName": "Image Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "Post Article",
+              "displayName": "Post Article",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        836,
+        0
+      ],
+      "id": "82b33baf-0c54-4a74-9b2e-ea98bf5441af",
+      "name": "Execute Workflow"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-14T14:08:36.910Z",
+      "updatedAt": "2025-05-14T14:08:36.910Z",
+      "id": "oNui9YaGMegZV6Ai",
+      "name": "Nihal"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-23T04:43:33.954Z",
+  "versionId": "fa37041c-40dd-48bc-bd1a-44e0fc1975fc"
+}
