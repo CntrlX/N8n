@@ -1,0 +1,550 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Is Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid?": {
+      "main": [
+        [
+          {
+            "node": "Is Valid?1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Student Exists?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Student Not Found Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Available Slots": {
+      "main": [
+        [
+          {
+            "node": "Slots Available?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slots Available?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Slots Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Student Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success Response": {
+      "main": [
+        [
+          {
+            "node": "Respond To Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Slots Error": {
+      "main": [
+        [
+          {
+            "node": "Respond To Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Student Not Found Error": {
+      "main": [
+        [
+          {
+            "node": "Respond To Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validation Error": {
+      "main": [
+        [
+          {
+            "node": "Respond To Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Each Appointment": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid?1": {
+      "main": [
+        [
+          {
+            "node": "Student Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond To Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-11T14:18:15.545Z",
+  "id": "i6YbnvCbTqAoqh6o",
+  "meta": null,
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "book-counselor",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        300
+      ],
+      "webhookId": "counselor-booking-webhook",
+      "id": "185e34c2-f0d5-450a-b5f1-d258dbe5e3cd"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Validate input data\nconst grNumber = $input.body.grNumber;\nconst studentName = $input.body.studentName;\nconst classSection = $input.body.classSection;\nconst email = $input.body.email;\nconst bookedBy = $input.body.bookedBy || 'Student';\n\n// Perform basic validation\nconst errors = [];\n\nif (!grNumber) errors.push('GR Number is required');\nif (!studentName) errors.push('Student Name is required');\nif (!classSection) errors.push('Class and Section is required');\nif (!email) errors.push('Email is required');\n\n// Email validation\nconst emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/;\nif (email && !emailRegex.test(email)) errors.push('Invalid email format');\n\nif (errors.length > 0) {\n  return {\n    valid: false,\n    errors: errors\n  };\n}\n\nreturn {\n  valid: true,\n  data: {\n    grNumber,\n    studentName,\n    classSection,\n    email,\n    bookedBy,\n    requestDate: new Date().toISOString()\n  }\n};"
+      },
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -1540,
+        300
+      ],
+      "id": "de22af31-56ee-4556-a5f6-6711c7ec65c5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "name": "Is Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1320,
+        300
+      ],
+      "id": "34309b29-71c9-409d-a10a-395c00871dbb"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.count }}",
+              "operation": "larger"
+            }
+          ]
+        }
+      },
+      "name": "Student Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -860,
+        120
+      ],
+      "id": "1808a8c5-3a2a-4f5e-9955-a4f92e77634c"
+    },
+    {
+      "parameters": {},
+      "name": "Get Available Slots",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        80
+      ],
+      "id": "6c8aca93-a50e-468e-a47a-3bfa4921102f",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "functionCode": "// Process available slots\nconst counselors = $input.all();\nlet availableSlots = [];\n\nfor (const counselor of counselors) {\n  const slots = counselor.availableSlots || [];\n  \n  for (const slot of slots) {\n    if (!slot.isBooked) {\n      availableSlots.push({\n        counselorId: counselor._id,\n        counselorName: counselor.name,\n        day: slot.day,\n        date: new Date(slot.startTime).toLocaleDateString(),\n        startTime: new Date(slot.startTime).toLocaleTimeString(),\n        endTime: new Date(slot.endTime).toLocaleTimeString(),\n        slotId: slot._id\n      });\n    }\n  }\n}\n\n// Sort by date and time\navailableSlots.sort((a, b) => {\n  const dateA = new Date(a.startTime);\n  const dateB = new Date(b.startTime);\n  return dateA - dateB;\n});\n\nreturn { availableSlots };"
+      },
+      "name": "Process Available Slots",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        80
+      ],
+      "id": "c871b2fa-bbaa-4ea7-98c7-d8e360050b3c"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.availableSlots.length }}",
+              "operation": "larger"
+            }
+          ]
+        }
+      },
+      "name": "Slots Available?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        80
+      ],
+      "id": "65ca8da8-3e2d-4241-a31b-07a18c231cb3"
+    },
+    {
+      "parameters": {
+        "functionCode": "// In a real scenario, you would have a mechanism for the student\n// to select a specific slot from the available ones.\n// For this example, we'll simulate by picking the first available slot\n\nconst slots = $input.availableSlots;\nconst selectedSlot = slots[0];\nconst studentData = $('Verify Student').first().json;\n\n// Combine with original request data\nconst requestData = $('Validate Input').first().json.data;\n\nreturn {\n  appointment: {\n    studentGrNumber: requestData.grNumber,\n    studentName: requestData.studentName,\n    studentClass: requestData.classSection.split(' ')[0],\n    studentSection: requestData.classSection.split(' ')[1] || '',\n    studentEmail: requestData.email,\n    counselorId: selectedSlot.counselorId,\n    counselorName: selectedSlot.counselorName,\n    appointmentDate: selectedSlot.date,\n    startTime: selectedSlot.startTime,\n    endTime: selectedSlot.endTime,\n    reason: '',\n    status: 'scheduled',\n    notes: '',\n    bookedBy: requestData.bookedBy,\n    bookedAt: new Date().toISOString(),\n    slotId: selectedSlot.slotId\n  }\n};"
+      },
+      "name": "Prepare Appointment",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1d4a7c42-a913-4553-b7cb-572277e0b7fb"
+    },
+    {
+      "parameters": {},
+      "name": "Create Appointment",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "c6582a28-216d-4cc3-8d2c-56ae7fdf4994",
+      "credentials": {}
+    },
+    {
+      "parameters": {},
+      "name": "Update Slot Status",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "951104e8-5fd2-4500-9a56-a3dcb1f804bd",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "fromEmail": "counseling@school.edu",
+        "toEmail": "={{ $json.appointment.studentEmail }}",
+        "subject": "School Counselor Appointment Confirmation",
+        "text": "=Dear {{ $json.appointment.studentName }},\n\nYour appointment with the school counselor has been confirmed.\n\nDetails:\n- Date: {{ $json.appointment.appointmentDate }}\n- Time: {{ $json.appointment.startTime }} to {{ $json.appointment.endTime }}\n- Counselor: {{ $json.appointment.counselorName }}\n\nPlease arrive 5 minutes before your scheduled time. If you need to reschedule, please contact the counseling office.\n\nRegards,\nSchool Counseling Department",
+        "options": {}
+      },
+      "name": "Send Student Confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "11787e6f-444f-482a-a021-ab469f7b65e9"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Generate success response\nconst appointment = $json.appointment;\n\nreturn {\n  success: true,\n  message: 'Appointment booked successfully',\n  appointmentDetails: {\n    studentName: appointment.studentName,\n    grNumber: appointment.studentGrNumber,\n    date: appointment.appointmentDate,\n    time: `${appointment.startTime} - ${appointment.endTime}`,\n    counselor: appointment.counselorName\n  }\n};"
+      },
+      "name": "Success Response",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "b831c6d6-d074-4b71-a6b2-7de952750657"
+    },
+    {
+      "parameters": {
+        "functionCode": "// No slots available\nreturn {\n  success: false,\n  message: 'No counselor slots are currently available. Please try again later.',\n  errorCode: 'NO_SLOTS'\n};"
+      },
+      "name": "No Slots Error",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        0,
+        160
+      ],
+      "id": "1c1c88d2-fcd7-4dbc-8905-73b795977c95"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Student not found\nreturn {\n  success: false,\n  message: 'Student with the provided GR number was not found in our records.',\n  errorCode: 'STUDENT_NOT_FOUND'\n};"
+      },
+      "name": "Student Not Found Error",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        320
+      ],
+      "id": "1a04bd7e-ee37-4d49-b315-3583872446e2"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Validation errors\nreturn {\n  success: false,\n  message: 'There were errors in your form submission',\n  errors: $json.errors,\n  errorCode: 'VALIDATION_ERROR'\n};"
+      },
+      "name": "Validation Error",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        420
+      ],
+      "id": "4841da6a-55c7-4ddb-999e-09cf0738dd2e"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Respond To Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ],
+      "id": "7926955d-4171-41d1-a4f9-150c32930146"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "name": "Daily Reminder Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        700
+      ],
+      "id": "6f4543fc-acc4-41d6-86a5-7315f1ceb15a"
+    },
+    {
+      "parameters": {},
+      "name": "Get Tomorrow's Appointments",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        -1540,
+        700
+      ],
+      "id": "2d4afae3-0cb4-4ee8-b67d-40d1ed5583ea",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Each Appointment",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -1320,
+        700
+      ],
+      "id": "0543f4fd-3695-4224-ba0d-084ab45ba453"
+    },
+    {
+      "parameters": {
+        "fromEmail": "counseling@school.edu",
+        "toEmail": "={{ $json.studentEmail }}",
+        "subject": "Reminder: Your School Counselor Appointment Tomorrow",
+        "text": "=Dear {{ $json.studentName }},\n\nThis is a friendly reminder that you have a counseling appointment scheduled for tomorrow.\n\nDetails:\n- Date: {{ $json.appointmentDate }}\n- Time: {{ $json.startTime }} to {{ $json.endTime }}\n- Counselor: {{ $json.counselorName }}\n\nPlease arrive 5 minutes before your scheduled time. If you need to reschedule, please contact the counseling office immediately.\n\nRegards,\nSchool Counseling Department",
+        "options": {}
+      },
+      "name": "Send Reminder Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        700
+      ],
+      "id": "5207e816-e0ea-496e-9e37-9b7d7e404fc9"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "name": "AI Analysis Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        1020
+      ],
+      "id": "50b3e241-48f1-48fd-acf7-8c416f23bf92"
+    },
+    {
+      "parameters": {},
+      "name": "Get Appointment Stats",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        -1540,
+        1020
+      ],
+      "id": "ffaadb29-f66f-424b-b175-3973f17465f2",
+      "credentials": {}
+    },
+    {
+      "parameters": {},
+      "name": "Busiest Counselor Analysis",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        -1320,
+        1020
+      ],
+      "id": "38b699fc-84c3-44f1-86a8-ef45c2440733",
+      "credentials": {}
+    },
+    {
+      "parameters": {},
+      "name": "Class Analysis",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 2,
+      "position": [
+        -1100,
+        1020
+      ],
+      "id": "97d30ba7-5131-40f4-84cf-12c8e37d47e1",
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "name": "Is Valid?1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1080,
+        240
+      ],
+      "id": "6bfc5089-6736-43bd-b0ba-34898c673d9e"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-11T14:18:15.545Z",
+  "versionId": "47c4e816-8ca9-48c0-baed-3501b3f7cdf0"
+}
