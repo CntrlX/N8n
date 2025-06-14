@@ -1,0 +1,404 @@
+{
+  "active": false,
+  "connections": {
+    "Gmail": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Server_Status_Alive",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Down Server-Before",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Server-Monitor": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Server-Monitor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Down Server-Before": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-10T14:37:55.067Z",
+  "id": "7BRRCZvgyvYI5rcy",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Live-Server Status",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "📘 Node Descriptions for Your Web Server Monitor Workflow\n\n⏰ 1. Schedule Trigger  \nTriggers the workflow every minute to initiate regular checks on server availability.\n\n📄 2. Web Servers List (Google Sheets)  \nFetches a list of server hostnames or IP addresses from a Google Sheet.  \nEach row is treated as one server. This makes server management easy — no need to edit the workflow to add/remove servers.\n\n🌐 3. Server Alive Check (HTTP) \nSends an HTTP GET request to each server (e.g., http://your-server.com).  \nIf the request fails, the error path is triggered.  \n\n📝 4. Web Server Alive Log (Google Sheets)  \nLogs successful server checks into a separate Sheet with a timestamp.\nThis log helps track uptime history, verify server health, and generate availability reports.\n\n🚨📧 5. Server Down Notification (Gmail)  \nSends an alert email if a server does not respond or returns an error.  \nIncludes the server address and the timestamp of failure.\n\n📝 6. Web Server Down Log (Google Sheets)\nLogs the failed server checks into another Sheet with a timestamp.  \nUseful for uptime reporting, debugging, and audit tracking.\n",
+        "height": 540,
+        "width": 560
+      },
+      "id": "a4519636-dbf1-46ec-8665-69c30ead85d6",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -100,
+        20
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "e3c09d0a-8e19-4916-9466-b2b19ae5592e",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        580,
+        460
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ",
+          "mode": "list",
+          "cachedResultName": "Xyvin Server-Monitor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 524060827,
+          "mode": "list",
+          "cachedResultName": "Server_List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit#gid=524060827"
+        },
+        "options": {}
+      },
+      "id": "2fb3544e-76d8-435b-bde0-92f8b6dbff2d",
+      "name": "Server-Monitor",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        800,
+        460
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.Server }}",
+        "options": {}
+      },
+      "id": "6a458951-eab4-4ddd-b147-8e324fb5f82b",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1020,
+        460
+      ],
+      "typeVersion": 4.2,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ",
+          "mode": "list",
+          "cachedResultName": "Xyvin Server-Monitor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 303958634,
+          "mode": "list",
+          "cachedResultName": "Server_Status_Alive",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit#gid=303958634"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "=Alive",
+            "Server IP Address": "={{ $('Server-Monitor').item.json.Server }}",
+            "TimeStamp": "={{ $('Schedule Trigger').item.json.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "TimeStamp",
+              "displayName": "TimeStamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Server IP Address",
+              "displayName": "Server IP Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "dd4e88c5-24ce-4be8-931c-704f8587f24c",
+      "name": "Server_Status_Alive",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1460,
+        280
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "tijo.xyvin@gmail.com, favasxyvintech@gmail.com",
+        "subject": "=🔻 Server Down:{{ $json['Server IP Address'] }} : {{ $today.format('yyyy-MM-dd') }}",
+        "message": "=Hi Team,\n\nAt {{$now.format('yyyy-MM-dd HH:mm:ss')}}, the following server failed to respond to ping:\n\n🔻 Server Down: {{ $json['Server IP Address'] }}\n\nPlease investigate immediately to prevent service disruption. \n\nAutomated Monitoring System\n",
+        "options": {}
+      },
+      "id": "9a8ffb16-64f7-4328-8118-10b20f12e012",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        2040,
+        820
+      ],
+      "webhookId": "d37932ae-5316-48bc-8451-7af4b89634bd",
+      "typeVersion": 2.1,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xzpfKvphm1f0iSF3",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ",
+          "mode": "list",
+          "cachedResultName": "Xyvin Server-Monitor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Server_Status_Down",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Server IP Address": "={{ $('Server-Monitor').item.json.Server }}",
+            "TimeStamp": "={{ $('Schedule Trigger').item.json.timestamp }}",
+            "Status": "Down"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "TimeStamp",
+              "displayName": "TimeStamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Server IP Address",
+              "displayName": "Server IP Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "558f6096-d791-4e47-9987-a94567e92324",
+      "name": "Down Server-Before",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1360,
+        600
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const grouped = {}; \n\n// Step 1: Group by server and collect timestamps\nfor (const row of items) {\n  const url = row.json[\"Server IP Address\"];\n  const tsStr = row.json[\"TimeStamp\"];\n  const timestamp = new Date(tsStr);\n  \n  if (isNaN(timestamp)) continue;\n  \n  if (!grouped[url]) {\n    grouped[url] = new Set(); // Use Set to auto-remove duplicates\n  }\n  grouped[url].add(timestamp.toISOString());\n}\n\n// Step 2: Process each server based on timestamp count\nconst result = [];\nfor (const [url, timestampSet] of Object.entries(grouped)) {\n  const timestamps = Array.from(timestampSet).map(t => new Date(t));\n  \n  // Sort in descending order (latest first)\n  timestamps.sort((a, b) => b - a);\n  \n  if (timestamps.length === 1) {\n    // Case 1: Only one timestamp exists for this server\n    result.push({\n      json: {\n        \"Server IP Address\": url,\n        \"Timestamp\": timestamps[0].toISOString()\n      }\n    });\n  } else if (timestamps.length >= 2) {\n    // Case 2: Multiple timestamps - get latest 2 and check difference\n    const [latest, previous] = timestamps;\n    const diffMs = latest - previous;\n    \n    // Check if difference is >= 1 hour (3600000 ms)\n    if (diffMs >= 3600000) {\n      result.push({\n        json: {\n          \"Server IP Address\": url,\n          \"Last Two Timestamps\": [latest.toISOString(), previous.toISOString()],\n          \"Time Difference (ms)\": diffMs\n        }\n      });\n    }\n  }\n}\n\nreturn result;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        880
+      ],
+      "id": "2859e607-3342-426c-a8b9-88798c20cce2",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ",
+          "mode": "list",
+          "cachedResultName": "Xyvin Server-Monitor",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Server_Status_Down",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uvp7Z-R312k7XhuolceD1tUh-c_y1NeFmqtcNLRvnVQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1580,
+        600
+      ],
+      "id": "97084767-b4ab-405f-afa2-e75eb438f6f6",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-13T18:43:40.480Z",
+  "versionId": "17e0c3e2-ca1b-43fe-8035-b6ed5a492b6c"
+}
