@@ -1,0 +1,716 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Drive2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Google Drive2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive4": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive5": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive6": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Google Drive6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge items": {
+      "main": [
+        [
+          {
+            "node": "PDFKit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge items1": {
+      "main": [
+        [
+          {
+            "node": "PDFKit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-24T13:41:37.526Z",
+  "id": "WxQ5XVL2fcrP8vol",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Extel ripper",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1180,
+        -2020
+      ],
+      "id": "38c8b636-6e28-4fb5-8bb2-a2bafd6e0a12",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1JrUU7j8LsyXaG5q6XgN3Pefxn5ISsm26GOdI429Usuc",
+          "mode": "list",
+          "cachedResultName": "ET-Technical",
+          "cachedResultUrl": "https://docs.google.com/document/d/1JrUU7j8LsyXaG5q6XgN3Pefxn5ISsm26GOdI429Usuc/edit?usp=drivesdk"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "drawingsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf",
+              "sheetsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -520,
+        -2120
+      ],
+      "id": "241e7630-1a9c-484f-9a72-e478e2091305",
+      "name": "Google Drive",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive3').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "drawingsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf",
+              "sheetsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -520,
+        -2320
+      ],
+      "id": "fb692880-9177-4fdd-80ee-4b0125b14027",
+      "name": "Google Drive2",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 46932263,
+          "mode": "list",
+          "cachedResultName": "BOM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1apECfy3I1JP095HzyPalynKy1VXErk6_YIvHVn3baFo/edit#gid=46932263"
+        },
+        "toDelete": "columns",
+        "startIndex": "S",
+        "numberToDelete": 6
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -740,
+        -2320
+      ],
+      "id": "b6ad3103-3296-44c4-ada1-9943e7cf1efd",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1zi3_hRosrhOFxygdWkU3kXI52QlfIilPbWC307wXFjs",
+          "mode": "list",
+          "cachedResultName": "extel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zi3_hRosrhOFxygdWkU3kXI52QlfIilPbWC307wXFjs/edit?usp=drivesdk"
+        },
+        "name": "ET-Technical-sheet",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+          "mode": "list",
+          "cachedResultName": "Shared",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -960,
+        -2320
+      ],
+      "id": "85d2d042-8a68-48bd-b69b-3be2fa58bcfd",
+      "name": "Google Drive3",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1zi3_hRosrhOFxygdWkU3kXI52QlfIilPbWC307wXFjs",
+          "mode": "list",
+          "cachedResultName": "extel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zi3_hRosrhOFxygdWkU3kXI52QlfIilPbWC307wXFjs/edit?usp=drivesdk"
+        },
+        "name": "ET-Commercial-sheet",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+          "mode": "list",
+          "cachedResultName": "Shared",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -960,
+        -1745
+      ],
+      "id": "05aef7f5-3783-4b5f-a498-7cc819157154",
+      "name": "Google Drive4",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1DQtGFaxT1HgWJ_MFQRyqkyAEtUjocnZ82hV3xuMt6Yc",
+          "mode": "list",
+          "cachedResultName": "ET-Commercial",
+          "cachedResultUrl": "https://docs.google.com/document/d/1DQtGFaxT1HgWJ_MFQRyqkyAEtUjocnZ82hV3xuMt6Yc/edit?usp=drivesdk"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "drawingsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf",
+              "sheetsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -300,
+        -1945
+      ],
+      "id": "8640c8b6-3111-4a96-b9d6-dcbda27fc307",
+      "name": "Google Drive5",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive4').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "drawingsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf",
+              "sheetsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -300,
+        -1745
+      ],
+      "id": "0e3fd63b-8e47-4c4f-b623-63b8b6b3632f",
+      "name": "Google Drive6",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "name": "ET-Technical-pdf",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+          "mode": "list",
+          "cachedResultName": "Shared",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        360,
+        -2220
+      ],
+      "id": "05b18fad-f3f7-4df2-97b3-0564cf3017fe",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "name": "ET-Commercial-Pdf",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+          "mode": "list",
+          "cachedResultName": "Shared",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        580,
+        -1845
+      ],
+      "id": "e55d448d-65a8-4dca-93f3-c4d42525cd0d",
+      "name": "Google Drive7",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Google Drive4').item.json.id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 46932263,
+          "mode": "list",
+          "cachedResultName": "BOM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jV2CHRZdIMrUvMZt6AozGXKHjDrkbmKGjowtAC_TfGk/edit#gid=46932263"
+        },
+        "toDelete": "columns",
+        "startIndex": "G",
+        "numberToDelete": 4
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -520,
+        -1745
+      ],
+      "id": "88b6e862-d458-494a-acb1-db630a273b11",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 46932263,
+          "mode": "list",
+          "cachedResultName": "BOM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hqRNeRxHtW1r9VaGmUmOAL8MhhtRDEBeCNM16mhkUg8/edit#gid=46932263"
+        },
+        "toDelete": "columns",
+        "startIndex": "E",
+        "numberToDelete": 12
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -740,
+        -1745
+      ],
+      "id": "0d864499-8409-4702-aa0c-2b691d34d4fd",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "mergePDFs",
+        "pdfName": "output",
+        "firstPdfField": "data_1",
+        "secondPdfField": "data_0"
+      },
+      "type": "@cntrlx/n8n-nodes-pdfkitpro.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        140,
+        -2220
+      ],
+      "id": "2e99daef-f252-47da-89f1-60a10e7f4d72",
+      "name": "PDFKit"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -300,
+        -2220
+      ],
+      "id": "f989dc3f-8daf-4068-9337-963852bbeaa0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "let binaries = {}, binary_keys = [];\n\nfor (const [index, inputItem] of Object.entries($input.all())) {\n  binaries[`data_${index}`] = inputItem.binary.data;\n  binary_keys.push(`data_${index}`);\n}\n\nreturn [{\n    json: {\n        binary_keys: binary_keys.join(',')\n    },\n    binary: binaries\n}];\n"
+      },
+      "id": "268b3e1a-de2c-493c-ae26-72b44e11906a",
+      "name": "Merge items",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -80,
+        -2220
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "mergePDFs",
+        "pdfName": "output",
+        "firstPdfField": "data_0",
+        "secondPdfField": "data_1"
+      },
+      "type": "@cntrlx/n8n-nodes-pdfkitpro.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        360,
+        -1845
+      ],
+      "id": "b4644d3b-8859-4e76-b5ca-38a2de24043d",
+      "name": "PDFKit1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -80,
+        -1845
+      ],
+      "id": "94ca7960-7461-447f-aaee-9cad515c9ef1",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "let binaries = {}, binary_keys = [];\n\nfor (const [index, inputItem] of Object.entries($input.all())) {\n  binaries[`data_${index}`] = inputItem.binary.data;\n  binary_keys.push(`data_${index}`);\n}\n\nreturn [{\n    json: {\n        binary_keys: binary_keys.join(',')\n    },\n    binary: binaries\n}];\n"
+      },
+      "id": "eb6f3612-f9e2-42d8-a2b8-4cb1aaa02a09",
+      "name": "Merge items1",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        140,
+        -1845
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-24T13:41:53.099Z",
+      "updatedAt": "2025-05-24T13:41:53.099Z",
+      "id": "Bxij2efUKjkK7ExO",
+      "name": "EXCTEL"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-24T18:23:52.213Z",
+  "versionId": "108b0787-391f-4505-9934-5bf12095f27f"
+}
