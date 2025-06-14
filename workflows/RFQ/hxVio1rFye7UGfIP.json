@@ -1,0 +1,191 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-13T17:42:59.674Z",
+  "id": "hxVio1rFye7UGfIP",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "BOM Email Outgoing",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "DocLink"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "da5c0e83-7e84-42ae-b4e3-3781b9e674c6",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.DocLink }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        180,
+        40
+      ],
+      "id": "b04602c0-983c-477c-b7f9-37eb837d8fb7",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are provided with the following dynamic fields:\n\nSupplier Name: {{ $json.Supplier }}\n\nSupplier Email: {{ $json['Supplier Email'] }}\n\nMaterial Description: {{ $json['Material Description'] }}\n\nQuantity Required: {{ $json['Quantity Required'] }}\n\nUsing this information, compose a professional and aesthetically pleasing email to the supplier requesting the specified quantity of the listed material. The tone should be courteous and formal. Then, use the send email tool to send this email to the supplier's email address.\n\nOptional Sample Email Structure (for internal reference):\n\nSubject: Request for Quotation – {{ $json['Material Description'] }}\n\nDear {{ $json.Supplier }},\n\nI hope this message finds you well.\n\nWe are reaching out to request a quotation for {{ $json['Quantity Required'] }} units of {{ $json['Material Description'] }}. Kindly provide us with the pricing, availability, and estimated delivery schedule at your earliest convenience.\n\nPlease feel free to reach out if you require any additional details.\n\nLooking forward to your prompt response.\n\nBest regards,\n[Your Name] Nihal\n[Your Position] - Senior architect \n[Your Company Name]- xyvin\n[Your Contact Information] - Dicor577@gmail.com - +917994461589",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        400,
+        40
+      ],
+      "id": "10b6eecd-09e3-43d7-ac96-d02377e19993",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        260
+      ],
+      "id": "8b47baff-6fc6-4b9f-9fef-2ad22b82bf60",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        260
+      ],
+      "id": "6479fab4-5aab-46b5-88ff-17c09c3b4453",
+      "name": "Gmail",
+      "webhookId": "1c2308c4-5328-4025-aaaf-a0638542f66c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xzpfKvphm1f0iSF3",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "DocLink": "https://docs.google.com/spreadsheets/d/1eqX4CGYlTQxemfpjI66lezOWbJFSs1WyGWGsKZnsUfY/edit?usp=sharing"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T18:45:25.922Z",
+      "updatedAt": "2025-05-13T18:45:25.922Z",
+      "id": "mjEow6YbIOm7nrey",
+      "name": "RFQ"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-13T19:38:55.197Z",
+  "versionId": "8a443dc1-2c8b-4826-8c3e-773b1e079020"
+}
