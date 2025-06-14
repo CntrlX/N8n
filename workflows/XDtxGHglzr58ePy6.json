@@ -1,0 +1,327 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-05-11T12:27:41.847Z",
+  "id": "XDtxGHglzr58ePy6",
+  "meta": null,
+  "name": "Exctel",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a1938d59-cd49-482c-8ee0-ff95f3b7bf26",
+      "name": "When clicking 'Execute Workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1fecfe55-beb2-43e6-ba89-3070f0648953",
+      "name": "Receive RFQ",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 1,
+      "position": [
+        -600,
+        100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "e491b655-be69-4f93-9a95-cc5cf5b9d17c",
+      "name": "Manual Review - Bid or Reject",
+      "type": "n8n-nodes-base.manualWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        100
+      ],
+      "webhookId": "bid-decision"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"decision\"]}}",
+              "value2": "yes"
+            }
+          ]
+        }
+      },
+      "id": "98a9f0b6-280b-47ba-ba2d-f2391e8f68d5",
+      "name": "Proceed with Bid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get current date\nconst date = new Date();\nconst year = date.getFullYear().toString();\nconst month = (date.getMonth() + 1).toString().padStart(2, '0');\n\n// Generate sequential number\nconst sequentialNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0');\n\n// Create proposal number in format EXCTEL-YYYY-MM-XXX\nconst proposalNumber = `EXCTEL-${year}-${month}-${sequentialNumber}`;\n\n// Return data with the proposal number\nconst items = $input.all();\nfor (const item of items) {\n  item.json.proposalNumber = proposalNumber;\n  item.json.proposalDate = date.toISOString();\n  item.json.stage = \"Proposal Number Assigned\";\n}\nreturn items;"
+      },
+      "id": "acc822c0-7520-4254-8048-b636324e80de",
+      "name": "AI: AssignProposalNumber()",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log and archive rejected RFQ\nconst items = $input.all();\nfor (const item of items) {\n  item.json.status = \"Archived\";\n  item.json.archiveDate = new Date().toISOString();\n  item.json.archiveReason = item.json.decision === \"no\" ? \"Business Decision\" : \"Other\";\n}\nreturn items;"
+      },
+      "id": "7e962d4c-f545-449e-8177-3d5738626389",
+      "name": "Log and Archive RFQ",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "e4874cc5-519f-498c-92e0-12789e831192",
+      "name": "AI: GenerateBOM()",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [
+        200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Categorize BOM items and match with appropriate vendors\nconst data = $input.first().json;\nconst bomItems = data.items || [];\n\n// Vendor database by category (this would come from your vendor database in production)\nconst vendorCategories = {\n  \"CCTV\": [\n    { name: \"SecureTech Systems\", email: \"quotes@securetech.example.com\", preferredVendor: true },\n    { name: \"VisionGuard Inc\", email: \"sales@visionguard.example.com\", preferredVendor: false },\n    { name: \"SurveillancePro\", email: \"rfq@surveillancepro.example.com\", preferredVendor: false }\n  ],\n  \"Public Address\": [\n    { name: \"AudioComm Solutions\", email: \"quotes@audiocomm.example.com\", preferredVendor: true },\n    { name: \"SoundSystems Ltd\", email: \"bids@soundsystems.example.com\", preferredVendor: false },\n    { name: \"AcousticTech\", email: \"sales@acoustictech.example.com\", preferredVendor: false }\n  ],\n  \"Structured Cabling\": [\n    { name: \"NetConnect Solutions\", email: \"quotes@netconnect.example.com\", preferredVendor: true },\n    { name: \"CablePro Systems\", email: \"rfq@cablepro.example.com\", preferredVendor: true },\n    { name: \"DataLink Networks\", email: \"sales@datalink.example.com\", preferredVendor: false }\n  ]\n};\n\n// Categorize items and match with vendors\nconst categorizedItems = {};\nconst vendorsToContact = {};\n\nfor (const item of bomItems) {\n  const category = item.category;\n  \n  // Group items by category\n  if (!categorizedItems[category]) {\n    categorizedItems[category] = [];\n  }\n  categorizedItems[category].push(item);\n  \n  // Identify vendors for each category\n  const categoryVendors = vendorCategories[category] || [];\n  for (const vendor of categoryVendors) {\n    vendorsToContact[vendor.email] = vendor;\n  }\n}\n\n// Prepare vendor emails list\nconst vendorEmails = Object.keys(vendorsToContact);\n\nreturn [{ \n  json: { \n    ...data,\n    categorizedItems,\n    vendorsToContact: Object.values(vendorsToContact),\n    vendorEmails: vendorEmails.join(','),\n    proposalNumber: data.proposalNumber\n  } \n}];"
+      },
+      "id": "881e3f6f-913c-4004-9dc9-07c174469a65",
+      "name": "Categorize BOM Items",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        340,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "procurement@exctel.com",
+        "toEmail": "={{$json[\"vendorEmails\"]}}",
+        "subject": "=RFQ: {{$json[\"proposalNumber\"]}}",
+        "text": "=Dear Vendor,\\n\\nPlease find attached our Request for Quotation {{$json[\"proposalNumber\"]}}.\\n\\nBest regards,\\nExctel Procurement Team",
+        "options": {}
+      },
+      "id": "3ca5ba29-6f8d-4645-843e-c7d5f04e6647",
+      "name": "Send RFQ to Vendors (Manual)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        480,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0d046b15-77b9-4ad4-ad7f-102febed9820",
+      "name": "Receive Quotes",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 1,
+      "position": [
+        600,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "96dd4eb2-eade-453e-a7ff-4c28ee8ccdd3",
+      "name": "AI: ExtractVendorQuotes()",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [
+        800,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Prepare all vendor quotes for manual review\nconst vendorQuotes = $input.all().map(item => item.json);\n\n// Group items by description across all vendors\nconst itemsByDescription = {};\n\nfor (const quote of vendorQuotes) {\n  for (const item of quote.items) {\n    if (!itemsByDescription[item.itemDescription]) {\n      itemsByDescription[item.itemDescription] = [];\n    }\n    \n    itemsByDescription[item.itemDescription].push({\n      vendorName: quote.vendorName,\n      quoteNumber: quote.quoteNumber,\n      unitPrice: item.unitPrice,\n      currency: item.currency || quote.currency,\n      quantity: item.quantity,\n      totalPrice: item.totalPrice,\n      validUntil: quote.validUntil\n    });\n  }\n}\n\n// Format for review dashboard\nconst reviewData = [];\nfor (const [itemDesc, quotes] of Object.entries(itemsByDescription)) {\n  // Sort by price\n  const sortedQuotes = quotes.sort((a, b) => a.unitPrice - b.unitPrice);\n  \n  reviewData.push({\n    itemDescription: itemDesc,\n    vendorQuotes: sortedQuotes,\n    lowestPrice: sortedQuotes[0]?.unitPrice,\n    lowestPriceVendor: sortedQuotes[0]?.vendorName,\n    priceRange: {\n      min: sortedQuotes[0]?.unitPrice,\n      max: sortedQuotes[sortedQuotes.length - 1]?.unitPrice\n    },\n    recommendedVendor: sortedQuotes[0]?.vendorName, // Default to lowest price\n    // Set to null as it will be filled by manual selection\n    selectedVendor: null\n  });\n}\n\nreturn [{ json: { \n  reviewData, \n  proposalNumber: vendorQuotes[0].proposalNumber || $input.first().json.proposalNumber \n} }];"
+      },
+      "id": "b66e8404-09ae-4aae-95b2-da22725fef45",
+      "name": "Prepare Quotes for Review",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        940,
+        40
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "f3f0804a-afb0-4d69-adcd-8ad9c68f0d04",
+      "name": "Manual Vendor Selection",
+      "type": "n8n-nodes-base.manualWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        80
+      ],
+      "webhookId": "vendor-selection"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Process the manually selected vendors and compile costs\nconst data = $input.first().json;\nconst selectedVendors = data.selectedVendors || [];\n\n// Prepare consolidated items from manual selections\nconst consolidatedItems = [];\n\nfor (const selection of selectedVendors) {\n  consolidatedItems.push({\n    itemDescription: selection.itemDescription,\n    selectedVendor: selection.vendorName,\n    unitPrice: selection.unitPrice,\n    quantity: selection.quantity,\n    totalPrice: selection.totalPrice,\n    currency: selection.currency,\n    category: selection.category,\n    selectionReason: selection.selectionReason || \"Best value\"\n  });\n}\n\nreturn [{ json: { \n  consolidatedItems, \n  proposalNumber: data.proposalNumber \n} }];"
+      },
+      "id": "2cb34ff6-1f7f-44c8-bc29-138013356bb2",
+      "name": "Compile Costing",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Apply markup and FX rules to convert to selling price\nconst data = $input.first().json;\nconst items = data.consolidatedItems;\n\n// Define markup rules by category (these would come from your business rules)\nconst markupRules = {\n  \"CCTV\": 1.35, // 35% markup\n  \"Public Address\": 1.40, // 40% markup\n  \"Structured Cabling\": 1.25, // 25% markup\n  \"default\": 1.30 // 30% default markup\n};\n\n// FX conversion rates (would be fetched from API in production)\nconst fxRates = {\n  \"USD\": 1.0,\n  \"EUR\": 1.08,\n  \"GBP\": 1.25\n};\n\n// Apply markup and currency conversion\nconst pricedItems = items.map(item => {\n  // Determine category for markup\n  const category = item.category || \"default\";\n  const markup = markupRules[category] || markupRules.default;\n  \n  // Convert currency if needed\n  const fxRate = fxRates[item.currency] || 1.0;\n  const usdUnitPrice = item.unitPrice * fxRate;\n  \n  // Apply markup\n  const sellingUnitPrice = usdUnitPrice * markup;\n  const sellingTotalPrice = sellingUnitPrice * item.quantity;\n  \n  return {\n    ...item,\n    costUnitPrice: item.unitPrice,\n    costCurrency: item.currency,\n    sellingUnitPrice,\n    sellingTotalPrice,\n    sellingCurrency: \"USD\",\n    markup: markup,\n    marginPercent: ((markup - 1) / markup * 100).toFixed(2) + \"%\"\n  };\n});\n\n// Calculate totals\nconst totalCost = pricedItems.reduce((sum, item) => {\n  // Convert all to USD for summary\n  const fxRate = fxRates[item.costCurrency] || 1.0;\n  return sum + (item.costUnitPrice * item.quantity * fxRate);\n}, 0);\n\nconst totalSelling = pricedItems.reduce((sum, item) => {\n  return sum + item.sellingTotalPrice;\n}, 0);\n\nconst overallMargin = ((totalSelling - totalCost) / totalSelling * 100).toFixed(2) + \"%\";\n\nreturn [{ \n  json: { \n    ...data,\n    pricedItems, \n    summary: {\n      totalCost,\n      totalSelling,\n      overallMargin,\n      proposalCurrency: \"USD\"\n    }\n  } \n}];"
+      },
+      "id": "1da9020f-6ab3-47fa-aec9-f33fba94b7cd",
+      "name": "AI: ConvertToSellingPrice()",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "672836ff-a13f-4261-8dbe-378b2ecfe9f1",
+      "name": "AI: DraftProposals()",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [
+        1480,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Verify data completeness and compliance\nconst proposal = $input.first().json;\n\n// Define required sections for compliance\nconst requiredSections = [\n  \"Executive Summary\",\n  \"Technical Specifications\",\n  \"Pricing\",\n  \"Timeline\",\n  \"Terms and Conditions\"\n];\n\n// Check if all required sections are present\nconst missingElements = [];\nfor (const section of requiredSections) {\n  if (!proposal.content.includes(section)) {\n    missingElements.push(section);\n  }\n}\n\n// Check for other compliance requirements\nconst complianceIssues = [];\n\n// Verify pricing data\nif (!proposal.summary || !proposal.summary.totalSelling) {\n  complianceIssues.push(\"Missing total pricing information\");\n}\n\n// Verify proposal number is present\nif (!proposal.proposalNumber) {\n  complianceIssues.push(\"Missing proposal number\");\n}\n\n// Set compliance status\nconst isCompliant = missingElements.length === 0 && complianceIssues.length === 0;\n\nreturn [{\n  json: {\n    ...proposal,\n    compliance: {\n      isCompliant,\n      missingElements,\n      complianceIssues,\n      checkedDate: new Date().toISOString()\n    }\n  }\n}];"
+      },
+      "id": "15a4e427-d5dd-4a71-94c6-51384cd027f6",
+      "name": "AI: CheckCompliance()",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "proposals@exctel.com",
+        "toEmail": "internal-review@exctel.com",
+        "subject": "=For Review: Proposal {{$json[\"proposalNumber\"]}}",
+        "text": "=Please review the attached proposal {{$json[\"proposalNumber\"]}} before client submission.\\n\\nCompliance Status: {{$json[\"compliance\"][\"isCompliant\"] ? \"Compliant\" : \"Non-compliant\"}}\\n\\nBest regards,\\nProposal Team",
+        "options": {}
+      },
+      "id": "c66bdfa1-8d53-46eb-b787-bf90aad2296d",
+      "name": "Submit to Internal Team (Manual)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "proposals@exctel.com",
+        "toEmail": "={{$json[\"clientEmail\"]}}",
+        "subject": "=Exctel Proposal: {{$json[\"proposalNumber\"]}}",
+        "text": "=Dear {{$json[\"clientName\"]}},\\n\\nPlease find attached our proposal {{$json[\"proposalNumber\"]}} in response to your RFQ.\\n\\nWe look forward to your feedback.\\n\\nBest regards,\\nExctel Team",
+        "options": {}
+      },
+      "id": "0df6753f-900c-4b07-9276-a04bf0c67204",
+      "name": "Submit to Client (Manual)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ac629de2-b6c8-4daa-87cb-326841a4b86c",
+      "name": "Client Feedback and Clarification",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "d4da49b1-8419-4d8e-8eed-d16ec3a79996",
+      "name": "AI: ClarifyFeedback()",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process feedback and make revisions\nconst feedback = $input.first().json;\nconst data = $input.first().json;\n\n// Get the original proposal\nconst originalProposal = data.originalProposal || data;\n\n// Create a revised version with tracked changes\nconst revisedProposal = {\n  ...originalProposal,\n  revisionNumber: (originalProposal.revisionNumber || 0) + 1,\n  revisionDate: new Date().toISOString(),\n  changes: feedback.changes,\n  revisionHistory: [\n    ...(originalProposal.revisionHistory || []),\n    {\n      revisionNumber: (originalProposal.revisionNumber || 0) + 1,\n      date: new Date().toISOString(),\n      changes: feedback.changes\n    }\n  ]\n};\n\nreturn [{ json: revisedProposal }];"
+      },
+      "id": "9e898c85-1f11-45b6-bbd8-8418929ccbab",
+      "name": "Make Revisions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        2600,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "path": "proposal-accepted",
+        "options": {}
+      },
+      "id": "1c88ecdd-7502-478e-97c1-5a091bf44696",
+      "name": "Client Accepts Proposal",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        0
+      ],
+      "webhookId": "proposal-accepted"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-11T12:28:31.517Z",
+  "versionId": "4820720b-0e05-4691-922a-885e940fae69"
+}
