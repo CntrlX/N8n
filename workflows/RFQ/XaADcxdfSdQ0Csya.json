@@ -1,0 +1,309 @@
+{
+  "active": false,
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Price aggregator tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T05:04:49.128Z",
+  "id": "XaADcxdfSdQ0Csya",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RFQ email Incoming",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "sender": "="
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "536b0643-39a3-47c6-8dc9-62ba533546e1",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xzpfKvphm1f0iSF3",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1TOOAVu-q0ZYzwVItTL4ZwuRQshoyfcyHffuV4z7EZSc/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TOOAVu-q0ZYzwVItTL4ZwuRQshoyfcyHffuV4z7EZSc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        240,
+        -120
+      ],
+      "id": "def60037-de36-4120-856a-f751561f4de1",
+      "name": "Google Sheets",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4c6648da-644d-4799-ac5e-19ca5fbd8452",
+              "leftValue": "={{ $('Gmail Trigger').item.json.From }}",
+              "rightValue": "={{ $json.Email }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        280
+      ],
+      "id": "b5207d24-08c0-4c7a-a00a-d460b5325dd2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "We have the email from the <com> about the quotaion email: <data> . you have to extract the needed data from the email and use the price aggregator tool to save the price, name, quantity and quality of the supplier based on the email",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        860,
+        -60
+      ],
+      "id": "e09eb041-9ead-4e98-8532-e31c9e08e353",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        840,
+        160
+      ],
+      "id": "0d63f52b-80e3-47d2-a974-911da769bb4c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Name of Supplier\": \"ACC cements\",\n\t\"Material Name\": \"Cement\",\n    \"Quantity\": \"1 unit\",\n    \"Quality\": \"Good, very professional\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        200
+      ],
+      "id": "7ac70818-27df-4f82-9d50-a50c52371b5c",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qUCVgXlax0sDRoWZ",
+          "mode": "list",
+          "cachedResultName": "RFQ Price aggregator"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name of supplier": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name_of_supplier', ``, 'string') }}",
+            "Material": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Material', ``, 'string') }}",
+            "Quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Quantity', ``, 'string') }}",
+            "Quality ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Quality_', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name of supplier",
+              "displayName": "Name of supplier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "Material",
+              "displayName": "Material",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "Quality ",
+              "displayName": "Quality ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        980,
+        240
+      ],
+      "id": "43ced5f9-9402-4a5e-8026-3c0c683bc7ca",
+      "name": "Price aggregator tool"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T18:45:25.922Z",
+      "updatedAt": "2025-05-13T18:45:25.922Z",
+      "id": "mjEow6YbIOm7nrey",
+      "name": "RFQ"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-14T07:23:22.955Z",
+  "versionId": "c7cf09bc-714f-4036-8243-3070dcc758e3"
+}
