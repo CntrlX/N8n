@@ -1,0 +1,343 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T07:43:13.976Z",
+  "id": "jURStryKcXOtjCyk",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RFQ Price Markup",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "adef8d80-ed7e-4dcf-80a8-74e24cd3fe08",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1xtd-CkMOKt7IV53b3dA2qcoJygBEtsvzd-GZMqmfEns/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xtd-CkMOKt7IV53b3dA2qcoJygBEtsvzd-GZMqmfEns/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        0
+      ],
+      "id": "70dabfa6-8db2-4e8a-b507-8deb5cdb5e26",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24a64138-a2cc-4d0a-9728-ef5fe278e2d3",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            },
+            {
+              "id": "dc5e6bc2-82bd-456a-bf4e-55f86494b1de",
+              "name": "Supplier ",
+              "value": "={{ $json['Supplier '] }}",
+              "type": "string"
+            },
+            {
+              "id": "39e74120-0d88-443b-bb28-2ae7cf653639",
+              "name": "Material Name",
+              "value": "={{ $json['Material Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "b558dc08-7441-4be7-9829-02e2a0109344",
+              "name": "Quantity",
+              "value": "={{ $json.Quantity }}",
+              "type": "string"
+            },
+            {
+              "id": "5414b24e-71f8-4a94-88c4-e158e60920ae",
+              "name": "Price",
+              "value": "={{ ($json.Price.split(\" \")[0].toNumber()+\n($json.Price.split(\" \")[0].toNumber()/100)*18) }}{{ $json.Price.split(\" \")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "7f9ace97-699d-49a2-9f3f-da0d81d7489c",
+              "name": "Score",
+              "value": "={{ $json.Score }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "55d4fdca-154f-42fd-ba8d-4d86b549e36e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1twtHKw8W52cEsbSJDCYvD8NOgXA-oMGae5Zqf0r7BWg/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1twtHKw8W52cEsbSJDCYvD8NOgXA-oMGae5Zqf0r7BWg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Supplier ": "={{ $json['Supplier '] }}",
+            "Material Name": "={{ $json['Material Name'] }}",
+            "Quantity": "={{ $json.Quantity }}",
+            "Price": "={{ $json.Price }}",
+            "Score": "={{ $json.Score }}",
+            "Row_number": "={{ $json.row_number }}"
+          },
+          "matchingColumns": [
+            "Row_number"
+          ],
+          "schema": [
+            {
+              "id": "Row_number",
+              "displayName": "Row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Supplier ",
+              "displayName": "Supplier ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Material Name",
+              "displayName": "Material Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        0
+      ],
+      "id": "c45f8c7b-9fe9-4462-99af-326ba192206b",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json['Supplier '] }},{{ $json['Material Name'] }},{{ $json.Quantity }},{{ $json.Price }},{{ $json.Score }}, these are the data",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1360,
+        -40
+      ],
+      "id": "d9e5acec-4b8e-43c4-a381-6fec654919c0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "https://docs.google.com/document/d/12oxCcJWPvaxfPfP8kgO8s_4wOQDd32qA5lQFaz5VnKQ/edit?usp=sharing",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "=Supplier Name     : {{ $json['Supplier '] }}, Material Name     : {{ $json['Material Name'] }}, Quantity Supplied : {{ $json.Quantity }}, Quoted Price      : {{ $json.Price }}, Calculated Score  : {{ $json.Score }}\n\n"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "df227e3c-e3ef-4bd3-90ec-bcbb99662dc1",
+      "name": "Google Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "sct5L2B8mEh5uGp0",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "https://docs.google.com/document/d/12oxCcJWPvaxfPfP8kgO8s_4wOQDd32qA5lQFaz5VnKQ/edit?usp=sharing"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1060,
+        -160
+      ],
+      "id": "13ad1881-da50-47d8-a4c6-8ef3277d6955",
+      "name": "Google Docs1",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "sct5L2B8mEh5uGp0",
+          "name": "Google Docs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T18:45:25.922Z",
+      "updatedAt": "2025-05-13T18:45:25.922Z",
+      "id": "mjEow6YbIOm7nrey",
+      "name": "RFQ"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-14T08:32:03.459Z",
+  "versionId": "0528376b-0bab-48af-9e5f-06b2f8953ef2"
+}
