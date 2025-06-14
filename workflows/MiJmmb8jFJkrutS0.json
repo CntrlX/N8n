@@ -1,0 +1,330 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Description for Tiktok and Instagram": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-18T13:16:21.248Z",
+  "id": "MiJmmb8jFJkrutS0",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "sheetId": "your_google_sheet_id_here",
+        "range": "Sheet1!A2:H1000",
+        "options": {
+          "valueRenderMode": "UNFORMATTED_VALUE"
+        }
+      },
+      "name": "GetBookQuoteRow",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -25
+      ],
+      "id": "0d6b11a0-b02a-4ad6-8ef5-b45fb82385db",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": null,
+          "name": "Your Google Sheets Credential Name"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 16
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -80,
+        -285
+      ],
+      "id": "81f52fcf-828a-409b-ba6e-a8ad9a94eea5",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a book lover, a philosopher, a lover, deep thought person. Pick a profound literary quote from a famous or culturally significant book from any part of the world. Provide:  1. The quote (in quotes) 2. The book title 3. The author 4. Year of publication (if known) 5. A 2-line description of the book's theme  Format: Quote: \"...\" Book: ... Author: ... Year: ... Theme: ...",
+              "role": "system"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ad3fb548-8dd6-4e7e-99af-e43670a4d55c",
+      "name": "Generate Description for Tiktok and Instagram",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        360,
+        20
+      ],
+      "retryOnFail": true,
+      "typeVersion": 1.4,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "openAiApi": {
+          "id": "UFtmkY9ckjaL1yZu",
+          "name": "OpenAi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "name": "Insta AI",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1396,
+        -285
+      ],
+      "id": "1c1711d6-a2f5-439f-be57-941ab71dbdb5",
+      "name": "Google Drive",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "=Create an artistic digital painting inspired by the book \"{{ $json[\"Book\"] }}\" by {{ $json[\"Author\"] }}. Visually represent the theme: {{ $json[\"Theme\"] }}. Avoid text. Use a surreal or moody art style that fits the story’s emotional tone.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        736,
+        -360
+      ],
+      "id": "8d4b8f46-6f72-4f88-b10a-4bf12e3ad7cd",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "UFtmkY9ckjaL1yZu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const content = $json[\"message\"][\"content\"];\n\n// Split into lines and trim\nconst lines = content.split('\\n').map(line => line.trim());\n\n// Convert to key-value pairs\nconst data = {};\nfor (const line of lines) {\n  const match = line.match(/^([A-Za-z]+):\\s*[\"“]?(.*)[\"”]?$/);\n  if (match) {\n    const key = match[1];\n    const value = match[2];\n    data[key] = value;\n  }\n}\n\nreturn [{ json: data }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        516,
+        -285
+      ],
+      "id": "94269db2-2412-4acf-9f51-1c9d99709664",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "text": "={{ $json.Quote }}\n-{{ $json.Book }} | {{ $json.Author }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        1176,
+        -285
+      ],
+      "id": "70bde916-fb23-4994-95e1-1b15ff8fa0ad",
+      "name": "Edit Image"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        956,
+        -285
+      ],
+      "id": "3d3ae054-d13f-49d0-8f02-2753b332bdfe",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a book lover, a philosopher, a lover, deep thought person. Pick a profound literary quote from a famous or culturally significant book from any part of the world. Provide:  1. The quote (in quotes) 2. The book title 3. The author 4. Year of publication (if known) 5. A 2-line description of the book's theme  Format: Quote: \"...\" Book: ... Author: ... Year: ... Theme: ...",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        440,
+        -500
+      ],
+      "id": "0f0e183e-41bb-440a-a893-065cc13cac7b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        380,
+        -240
+      ],
+      "id": "cbadf0b3-5238-4d7f-a207-615cdb3b2a11",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "UFtmkY9ckjaL1yZu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        700,
+        -280
+      ],
+      "id": "7696de90-8d36-4787-a986-70d8d358f7b9",
+      "name": "Call n8n Workflow Tool"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-18T14:09:53.195Z",
+  "versionId": "f7dd5758-a5b1-414d-afce-4e08e454cde1"
+}
