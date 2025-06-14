@@ -1,0 +1,341 @@
+{
+  "active": false,
+  "connections": {
+    "Set All Prompts": {
+      "main": [
+        [
+          {
+            "node": "Generate Description for Tiktok and Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File 1": {
+      "main": [
+        [
+          {
+            "node": "Change name to photo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set API Variables": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - Generate Image 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change name to photo1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Separate Image Outputs 1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Generate Image 1": {
+      "main": [
+        [
+          {
+            "node": "Separate Image Outputs 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Set All Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Description for Tiktok and Instagram": {
+      "main": [
+        [
+          {
+            "node": "Set API Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-18T07:29:02.479Z",
+  "id": "0W8CTOmQAQoJopOC",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "insta book",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d8db2531-1b87-49a6-a1a2-76b0ee37174b",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -820,
+        40
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert assistant in creating great titles for uploading videos to social media.",
+              "role": "system"
+            },
+            {
+              "content": "=I'm going to upload a reel to social media consisting of a carousel of images that tell a story.\n\nCan you create a caption for the Instagram and TikTok post based on the following prompts that generate the images for the story?\n\nprompts:{{ $json.prompt1 }} {{ $json.prompt2 }} {{ $json.prompt3 }} {{ $json.prompt4 }} {{ $json.prompt5 }}\n\nIMPORTANT: Respond only with the caption, ≤ 90 characters. Do not add anything else. If the prompts are in Spanish, respond in Spanish; if they are in English, respond in English. I’ll tip you $100."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7bdf4352-d33b-4291-9526-6e65f29417d5",
+      "name": "Generate Description for Tiktok and Instagram",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -380,
+        40
+      ],
+      "retryOnFail": true,
+      "typeVersion": 1.4,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "openAiApi": {
+          "id": "UFtmkY9ckjaL1yZu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b70f1cfd-d12e-469d-864d-0034860cd00e",
+              "name": "prompt1",
+              "type": "string",
+              "value": "Vertical illustration (9:16), warm Studio Ghibli anime style. A peaceful, sunny village filled with cheerful people who have tiny, adorable floating AI robots gently whispering constant instructions into their ears. At the center, introduce a friendly-looking young man (around 25, casual clothes, slightly messy hair) smiling blankly as his personal AI robot floats beside his head. Overlay humorous caption: 'Life became easy when AI started thinking for us... maybe too easy.' Soft, pastel colors, cozy and inviting mood."
+            },
+            {
+              "id": "4d7f371c-e8f9-4941-a322-153607d01938",
+              "name": "prompt2",
+              "type": "string",
+              "value": "Vertical illustration (9:16), warm Studio Ghibli anime style. Same young man from previous image now in a cozy kitchen, cheerfully pouring milk straight onto the table, completely missing his bowl. His floating AI robot looks comically alarmed, urgently pointing towards the bowl. Morning sunlight coming from a nearby window, playful, humorous vibe. Overlay humorous caption: 'Even breakfast became complicated when AI guided every simple step we took.'"
+            },
+            {
+              "id": "55f99acf-7f3c-4c8d-b674-2b90c0760893",
+              "name": "prompt3",
+              "type": "string",
+              "value": "Vertical illustration (9:16), warm Studio Ghibli anime style. Same young man standing nervously at a totally empty street crossing. His tiny floating AI robot is frantically projecting confusing directional arrows in every direction, causing visible confusion on the young man's face. Comical sense of panic despite the completely safe and empty street. Bright daylight, humorous, gentle satire. Overlay humorous caption: 'Thanks to AI, crossing the street turned into an extreme mental puzzle.'"
+            },
+            {
+              "id": "4b14808a-d512-4b47-9008-573e092996e4",
+              "name": "prompt4",
+              "type": "string",
+              "value": "Vertical illustration (9:16), warm Studio Ghibli anime style. Same young man sitting across from a young woman in a cozy café, both staring blankly with polite smiles but not talking. Their floating personal AI robots enthusiastically communicate above them through speech bubbles, completely ignoring the silent humans beneath. Warm lighting, coffee shop vibes, funny and slightly absurd situation. Overlay humorous caption: 'Our AIs handled the conversations. We just sat and smiled politely.'"
+            },
+            {
+              "id": "435b6cfb-6d4b-42e7-afd4-8f387698eec1",
+              "name": "prompt5",
+              "type": "string",
+              "value": "Vertical illustration (9:16), warm Studio Ghibli anime style. Sunset setting on a grassy hill overlooking the village. Same young man sits thoughtfully, gazing at the horizon with a rare look of self-awareness and curiosity. His tiny AI robot looks worried, floating anxiously by his shoulder, unsure how to guide him. Reflective, calm mood with golden hour lighting. Overlay thoughtful, humorous caption: 'As the sun set, he realized something troubling: When was the last time he had a thought of his own?'"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b6d73ba4-57e1-4c22-96a7-020ede2dc944",
+      "name": "Set All Prompts",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -560,
+        40
+      ],
+      "typeVersion": "3.4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a5d52c2-5af1-4796-acba-4e1807fc7d7b",
+              "name": "image_prompt",
+              "type": "string",
+              "value": "{{ $json }}"
+            },
+            {
+              "id": "c41a8091-d952-4f5a-ae24-3b0691bbce57",
+              "name": "number_of_images",
+              "type": "number",
+              "value": 1
+            },
+            {
+              "id": "1b359a11-c05a-49c8-aa27-402b145fcbc1",
+              "name": "size_of_image",
+              "type": "string",
+              "value": "1024x1536"
+            },
+            {
+              "id": "6cf4ba85-d11a-48bb-9eaf-4084c9538d87",
+              "name": "openai_image_model",
+              "type": "string",
+              "value": "gpt-image-1"
+            },
+            {
+              "id": "7df8ba96-e22b-49cc-bf0f-5195d360aef8",
+              "name": "response_format_image",
+              "type": "string",
+              "value": "b64_json"
+            },
+            {
+              "id": "719392f2-f107-41a0-8e48-05a901cebb22",
+              "name": "format_image",
+              "type": "string",
+              "value": "webp"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9e1dea08-be60-495c-a282-d0156b693d0f",
+      "name": "Set API Variables",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        20,
+        40
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"{{ $json.openai_image_model }}\",\n  \"prompt\": \"{{ $('Set All Prompts').item.json.prompt1 }}\",\n  \"n\": {{ $json.number_of_images }},\n  \"size\": \"{{ $json.size_of_image }}\",\n  \"output_format\": \"{{ $json.format_image }}\"\n}",
+        "options": {}
+      },
+      "id": "397ed250-4241-481c-ad1f-bbecfaad0516",
+      "name": "OpenAI - Generate Image 1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        280,
+        -60
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "UFtmkY9ckjaL1yZu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "894dfa97-4214-47fa-8798-043b46850d7a",
+      "name": "Separate Image Outputs 1",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        500,
+        -60
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "b64_json",
+        "options": {}
+      },
+      "id": "56ffdfd4-81eb-4eec-ad70-f988802349c6",
+      "name": "Convert to File 1",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        720,
+        -60
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map((item, index) => {\n  // Grab the existing binary buffer under \"data\"\n  const buffer = item.binary.data;\n  // Build a new item with the renamed binary key\n  return {\n    json: item.json,\n    binary: {\n      // Rename to photo1, photo2, ...\n      [`photo${index + 1}`]: buffer\n    }\n  };\n});\n"
+      },
+      "id": "073eae03-1f6a-41ab-ba56-45c62bd124d0",
+      "name": "Change name to photo1",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        920,
+        -60
+      ],
+      "typeVersion": 2
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-18T13:09:54.578Z",
+  "versionId": "11d4b47d-99a8-4a10-8962-dcb2899d4aed"
+}
