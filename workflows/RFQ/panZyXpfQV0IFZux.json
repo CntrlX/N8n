@@ -1,0 +1,560 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs": {
+      "main": [
+        [
+          {
+            "node": "Google Docs2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Docs3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Docs3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Doc Updater": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T08:32:31.231Z",
+  "id": "panZyXpfQV0IFZux",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RFQ Proposal generation",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -240
+      ],
+      "id": "94a4c714-ad37-4313-8ce6-060a85ab769f",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1xtd-CkMOKt7IV53b3dA2qcoJygBEtsvzd-GZMqmfEns/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xtd-CkMOKt7IV53b3dA2qcoJygBEtsvzd-GZMqmfEns/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        -140
+      ],
+      "id": "2a99ff27-b069-4019-8cac-e8936330db6b",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24a64138-a2cc-4d0a-9728-ef5fe278e2d3",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            },
+            {
+              "id": "dc5e6bc2-82bd-456a-bf4e-55f86494b1de",
+              "name": "Supplier ",
+              "value": "={{ $json['Supplier '] }}",
+              "type": "string"
+            },
+            {
+              "id": "39e74120-0d88-443b-bb28-2ae7cf653639",
+              "name": "Material Name",
+              "value": "={{ $json['Material Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "b558dc08-7441-4be7-9829-02e2a0109344",
+              "name": "Quantity",
+              "value": "={{ $json.Quantity }}",
+              "type": "string"
+            },
+            {
+              "id": "5414b24e-71f8-4a94-88c4-e158e60920ae",
+              "name": "Price",
+              "value": "={{ ($json.Price.split(\" \")[0].toNumber()+\n($json.Price.split(\" \")[0].toNumber()/100)*18) }}{{ $json.Price.split(\" \")[1] }}",
+              "type": "string"
+            },
+            {
+              "id": "7f9ace97-699d-49a2-9f3f-da0d81d7489c",
+              "name": "Score",
+              "value": "={{ $json.Score }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        -140
+      ],
+      "id": "ea41b6e3-ad67-486a-ad4a-2765593df32a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1twtHKw8W52cEsbSJDCYvD8NOgXA-oMGae5Zqf0r7BWg/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1twtHKw8W52cEsbSJDCYvD8NOgXA-oMGae5Zqf0r7BWg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Supplier ": "={{ $json['Supplier '] }}",
+            "Material Name": "={{ $json['Material Name'] }}",
+            "Quantity": "={{ $json.Quantity }}",
+            "Price": "={{ $json.Price }}",
+            "Score": "={{ $json.Score }}",
+            "Row_number": "={{ $json.row_number }}"
+          },
+          "matchingColumns": [
+            "Row_number"
+          ],
+          "schema": [
+            {
+              "id": "Row_number",
+              "displayName": "Row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Supplier ",
+              "displayName": "Supplier ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Material Name",
+              "displayName": "Material Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        -140
+      ],
+      "id": "82ff630a-215c-4056-a2a3-f2bef90b341e",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Update the following template using the provided data.\n\nTemplate Content: {{ $json.content1 }}\n\nData to Insert: {{ $json.content2 }}\n\nUse the Doc Updater tool to populate the template with the provided data.\nEnsure that the structure and formatting of the original template remain intact and unaltered while integrating the new content accurately.\n\n focus more on updating Item No\nDescription\nQuantity\nUnit\nSpecifications / Notes\n1\n[Item 1 Description]\n[Qty]\n[Unit]\n[Details or Notes]\n2\n[Item 2 Description]\n[Qty]\n[Unit]\n[Details or Notes]\nthis data",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1560,
+        -280
+      ],
+      "id": "88190bdc-5db5-4bde-83b7-a764a6f9fe66",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "https://docs.google.com/document/d/12oxCcJWPvaxfPfP8kgO8s_4wOQDd32qA5lQFaz5VnKQ/edit?usp=sharing",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "=Supplier Name     : {{ $json['Supplier '] }}, Material Name     : {{ $json['Material Name'] }}, Quantity Supplied : {{ $json.Quantity }}, Quoted Price      : {{ $json.Price }}, Calculated Score  : {{ $json.Score }}\n\n"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        880,
+        -140
+      ],
+      "id": "e401de2c-accf-4597-974d-fc1939b609b6",
+      "name": "Google Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "sct5L2B8mEh5uGp0",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1JKxL0dkEEz4DfPNxdlVXJhnuBJwx0-8rsz4BaKHNbtM",
+          "mode": "list",
+          "cachedResultName": "Xyvin RFQ template",
+          "cachedResultUrl": "https://docs.google.com/document/d/1JKxL0dkEEz4DfPNxdlVXJhnuBJwx0-8rsz4BaKHNbtM/edit?usp=drivesdk"
+        },
+        "name": "{company Name} RFQ",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+          "mode": "list",
+          "cachedResultName": "Shared",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        880,
+        -340
+      ],
+      "id": "25dd3692-339d-4fa0-847a-bc3a3b9ffa47",
+      "name": "Google Drive",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1568,
+        -20
+      ],
+      "id": "8402f6aa-ec03-4216-9b7a-e4793a213c46",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "get",
+        "documentURL": "={{ $json.documentId }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        -140
+      ],
+      "id": "aca7e81e-6885-4c72-91f1-5addc9e48fd4",
+      "name": "Google Docs2",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        -340
+      ],
+      "id": "e086bf87-4314-4978-91f4-16f0ec4daba6",
+      "name": "Google Docs3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combineBySql",
+        "query": "SELECT\n  input1.documentId AS documentId1,\n  input1.content AS content1,\n  input2.documentId AS documentId2,\n  input2.content AS content2\nFROM input1\nJOIN input2 ON 1=1\nLIMIT 1;\n"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1320,
+        -240
+      ],
+      "id": "ed819fed-df7e-42de-be64-467693e15261",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentURL": "={{ $json.documentId1 }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_Old_Text', ``, 'string') }}",
+              "replaceText": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_New_Text', ``, 'string') }}",
+              "matchCase": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_Match_Case', ``, 'boolean') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        0
+      ],
+      "id": "70eff202-8da2-460d-bbf3-ee180b5cdc4a",
+      "name": "Doc Updater",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T18:45:25.922Z",
+      "updatedAt": "2025-05-13T18:45:25.922Z",
+      "id": "mjEow6YbIOm7nrey",
+      "name": "RFQ"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-20T14:21:06.470Z",
+  "versionId": "3857e94f-0403-4c14-90e0-cff69952e53f"
+}
