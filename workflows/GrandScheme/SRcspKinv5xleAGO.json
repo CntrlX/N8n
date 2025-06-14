@@ -1,0 +1,212 @@
+{
+  "active": false,
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Http request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-12T07:53:06.721Z",
+  "id": "SRcspKinv5xleAGO",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Researcher",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Topic }} this is the topic and you should research about it, if asked something create a google search first then take the first link to get the information. make sure only the 1st link comes as the response limit the response links to 5\n\nalso use the http request tool if you have a single link to visit\n",
+        "options": {
+          "systemMessage": "you are the researcher any topic you are given you will research the internet and you will be up to date on that topic and you will return the output\n\nthe tools you have are HTTP request which you will use to search the internet "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        360,
+        0
+      ],
+      "id": "9fa84685-eeda-4a43-924d-3ec8878a8bff",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        340,
+        260
+      ],
+      "id": "4fbdbdcb-9479-4ea9-899e-bf49a2a3f8d2",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Topic"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        0
+      ],
+      "id": "87b89b3d-2c02-4e87-89d1-3d25adfd3d47",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "model": "perplexity/sonar",
+        "options": {
+          "maxTokens": -1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        140,
+        320
+      ],
+      "id": "f398118a-2304-4581-8f23-697c93e1cb7e",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "74TyAk3ZXIxWf6er",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        460,
+        240
+      ],
+      "id": "c42d1522-03b0-47ce-bd29-95f56df4e8ed",
+      "name": "Http request",
+      "credentials": {
+        "serpApi": {
+          "id": "CgBceLIqxV8SOXQV",
+          "name": "SerpAPI Free account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "options": {},
+        "optimizeResponse": true,
+        "responseType": "html",
+        "cssSelector": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Selector__CSS_', ``, 'string') }}",
+        "onlyContent": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_Only_Content', ``, 'boolean') }}",
+        "truncateResponse": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Truncate_Response', ``, 'boolean') }}"
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        220
+      ],
+      "id": "a2caba48-9248-4847-b253-4add64e0cb9a",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Topic": "when is gta 6 coming out"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-12T07:53:03.830Z",
+      "updatedAt": "2025-05-12T07:53:03.830Z",
+      "id": "rwZNNg85Xr4kF8In",
+      "name": "GrandScheme"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-15T11:16:07.564Z",
+  "versionId": "e156568c-2d36-4ad3-800d-d3b0efe3b51c"
+}
