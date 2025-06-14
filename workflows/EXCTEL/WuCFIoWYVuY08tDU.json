@@ -1,0 +1,1632 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Microsoft OneDrive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Microsoft OneDrive10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive3": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge items": {
+      "main": [
+        [
+          {
+            "node": "PDFKit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge items1": {
+      "main": [
+        [
+          {
+            "node": "PDFKit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft OneDrive": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Get Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit": {
+      "main": [
+        [
+          {
+            "node": "Microsoft OneDrive2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit1": {
+      "main": [
+        [
+          {
+            "node": "Microsoft OneDrive7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft OneDrive2": {
+      "main": [
+        [
+          {
+            "node": "Microsoft OneDrive6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft OneDrive7": {
+      "main": [
+        [
+          {
+            "node": "Microsoft OneDrive8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft OneDrive10": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Get Sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "DOCX Find & Replace2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Delete Cols": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Cols1": {
+      "main": [
+        [
+          {
+            "node": "Delete Cols2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Cols2": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Delete Cols",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "batch sheet delete": {
+      "main": [
+        []
+      ]
+    },
+    "Get Sheet": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Delete Cols1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Sheet1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "batch sheet delete1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft SharePoint HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "Microsoft OneDrive3": {
+      "main": [
+        []
+      ]
+    },
+    "MS File Upload": {
+      "main": [
+        [
+          {
+            "node": "MS PDF download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MS PDF download": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "DOCX Find & Replace1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DOCX Find & Replace1": {
+      "main": [
+        [
+          {
+            "node": "MS File Upload1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MS File Upload1": {
+      "main": [
+        [
+          {
+            "node": "MS PDF download1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MS PDF download1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DOCX Find & Replace2": {
+      "main": [
+        [
+          {
+            "node": "MS File Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "batch sheet delete1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "batch sheet delete2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "batch sheet delete2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-27T15:32:47.487Z",
+  "id": "WuCFIoWYVuY08tDU",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Extel Sharepoint",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -5940,
+        -1585
+      ],
+      "id": "ee012f79-f8db-47ed-aa1b-e27056d8ebd1",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1zi3_hRosrhOFxygdWkU3kXI52QlfIilPbWC307wXFjs",
+          "mode": "list",
+          "cachedResultName": "extel",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zi3_hRosrhOFxygdWkU3kXI52QlfIilPbWC307wXFjs/edit?usp=drivesdk"
+        },
+        "name": "ET-Technical-sheet",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+          "mode": "list",
+          "cachedResultName": "Shared",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -5940,
+        -3820
+      ],
+      "id": "b49d969f-8ce5-4291-a60c-e1def85f1102",
+      "name": "Google Drive3",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -3540,
+        -2040
+      ],
+      "id": "522f081f-700b-40e5-be30-bde59fd7394e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "let binaries = {}, binary_keys = [];\n\nfor (const [index, inputItem] of Object.entries($input.all())) {\n  binaries[`data_${index}`] = inputItem.binary.data;\n  binary_keys.push(`data_${index}`);\n}\n\nreturn [{\n    json: {\n        binary_keys: binary_keys.join(',')\n    },\n    binary: binaries\n}];\n"
+      },
+      "id": "dcdef658-0b04-44a4-ab51-38f692897dcd",
+      "name": "Merge items",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -3320,
+        -2040
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -3520,
+        -1180
+      ],
+      "id": "9adc1580-712d-4276-966c-8518807dce80",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "let binaries = {}, binary_keys = [];\n\nfor (const [index, inputItem] of Object.entries($input.all())) {\n  binaries[`data_${index}`] = inputItem.binary.data;\n  binary_keys.push(`data_${index}`);\n}\n\nreturn [{\n    json: {\n        binary_keys: binary_keys.join(',')\n    },\n    binary: binaries\n}];\n"
+      },
+      "id": "d78de2b0-b3d6-4a44-951d-fe566193f0ae",
+      "name": "Merge items1",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -3300,
+        -1180
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "httpVariantWarning": "",
+        "method": "GET",
+        "url": "https://exctelengineering.sharepoint.com/_api/v2.0",
+        "": "",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftSharePointOAuth2Api",
+        "provideSslCertificates": false,
+        "sendQuery": true,
+        "specifyQuery": "keypair",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "",
+              "value": ""
+            }
+          ]
+        },
+        "sendHeaders": false,
+        "sendBody": false,
+        "options": {},
+        "infoMessage": ""
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5940,
+        -3300
+      ],
+      "id": "3abdfc96-9235-46e8-a989-071c8359647e",
+      "name": "Microsoft SharePoint HTTP Request",
+      "extendsCredential": "microsoftSharePointOAuth2Api",
+      "credentials": {
+        "microsoftSharePointOAuth2Api": {
+          "id": "PPeVOLJgTUskVypy",
+          "name": "Microsoft SharePoint account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": "016FVLFUHQ2FTAQXA2UNFJ2THRBXFXQFCF",
+        "additionalFields": {
+          "name": "(companyname0)excel.xlsx"
+        },
+        "parentReference": {}
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -5720,
+        -2110
+      ],
+      "id": "0953d433-eb0b-468a-b6c7-01516d0f6fa5",
+      "name": "Microsoft OneDrive",
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "operation": "search"
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -5940,
+        -2520
+      ],
+      "id": "127681d4-7ca5-4890-94e7-f913a65f6406",
+      "name": "Microsoft OneDrive1",
+      "alwaysOutputData": false,
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const url = $input.first().json.location;\n\nlet itemId = null;\n\nif (url.includes('items/')) {\n  // Split at 'items/' and take the part after\n  const afterItems = url.split('items/')[1];\n  \n  // Split again at '?' to remove any query parameters\n  itemId = afterItems.split('?')[0];\n}\n\nreturn [\n  {\n    json: {\n      itemId: itemId\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5500,
+        -2110
+      ],
+      "id": "3021665b-f63d-4d67-8aae-f20c259ef1c2",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "mergePDFs",
+        "pdfName": "data",
+        "firstPdfField": "data_1",
+        "secondPdfField": "data_0"
+      },
+      "type": "@cntrlx/n8n-nodes-pdfkit-pro.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        -3100,
+        -2040
+      ],
+      "id": "ed4a399a-927d-4917-afec-3852167d9a9b",
+      "name": "PDFKit"
+    },
+    {
+      "parameters": {
+        "operation": "mergePDFs",
+        "pdfName": "data",
+        "firstPdfField": "data_0",
+        "secondPdfField": "data_1"
+      },
+      "type": "@cntrlx/n8n-nodes-pdfkit-pro.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        -3080,
+        -1180
+      ],
+      "id": "a27f934f-3f2e-4698-9459-a1f8649222c3",
+      "name": "PDFKit1"
+    },
+    {
+      "parameters": {
+        "fileName": "companyname-Technical.pdf",
+        "parentId": "016FVLFUCBSNNL247X4BEJGEIUXHZHWZZT\t",
+        "binaryData": true
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -2880,
+        -2040
+      ],
+      "id": "05e5bb95-c6cc-482d-9389-fae5380cfa88",
+      "name": "Microsoft OneDrive2",
+      "alwaysOutputData": false,
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "rename",
+        "itemId": "={{ $json.id }}",
+        "newName": "companyname-Technical.pdf"
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -2660,
+        -2040
+      ],
+      "id": "6f37f704-0734-4a27-838a-e0ad0ec2e089",
+      "name": "Microsoft OneDrive6",
+      "alwaysOutputData": false,
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fileName": "companyname-Commercial.pdf",
+        "parentId": "016FVLFUCBSNNL247X4BEJGEIUXHZHWZZT\t",
+        "binaryData": true
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -2860,
+        -1180
+      ],
+      "id": "ae3225b8-ffc1-4fd5-ae2b-b06d55099e2e",
+      "name": "Microsoft OneDrive7",
+      "alwaysOutputData": false,
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "rename",
+        "itemId": "={{ $json.id }}",
+        "newName": "companyname-Commercial.pdf"
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -2640,
+        -1180
+      ],
+      "id": "127df826-ddcf-4ada-8895-2129eb90fce6",
+      "name": "Microsoft OneDrive8",
+      "alwaysOutputData": false,
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": "016FVLFUHQ2FTAQXA2UNFJ2THRBXFXQFCF",
+        "additionalFields": {
+          "name": "(companyname2)excel.xlsx"
+        },
+        "parentReference": {}
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -5720,
+        -1085
+      ],
+      "id": "19a99ae8-0207-4db0-9fe7-027cadd5f773",
+      "name": "Microsoft OneDrive10",
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const url = $input.first().json.location;\n\nlet itemId = null;\n\nif (url.includes('items/')) {\n  // Split at 'items/' and take the part after\n  const afterItems = url.split('items/')[1];\n  \n  // Split again at '?' to remove any query parameters\n  itemId = afterItems.split('?')[0];\n}\n\nreturn [\n  {\n    json: {\n      itemId: itemId\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5500,
+        -1085
+      ],
+      "id": "b84240e8-d89d-43d3-a77e-6c2d4caca38a",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/016FVLFUBSPMN6LHER6VEZUEUJH5B5HJAV/content",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4420,
+        -1780
+      ],
+      "id": "836e82d4-02c3-4b09-b368-eccf1142842f",
+      "name": "HTTP Request",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/{{ $('Code').item.json.itemId }}/content?format=pdf",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3760,
+        -2320
+      ],
+      "id": "616124ee-9616-4f3b-8e74-eef7ebef413b",
+      "name": "HTTP Request2",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "worksheet",
+        "operation": "deleteWorksheet",
+        "workbook": {
+          "__rl": true,
+          "value": "={{ $json.itemId }}",
+          "mode": "id"
+        },
+        "worksheet": {
+          "__rl": true,
+          "value": "{A574334E-1189-4351-92B6-910A9914FBDA}",
+          "mode": "list",
+          "cachedResultName": "BOM"
+        }
+      },
+      "type": "n8n-nodes-base.microsoftExcel",
+      "typeVersion": 2.1,
+      "position": [
+        -5940,
+        -3040
+      ],
+      "id": "9189f06b-bed3-4e88-9788-6d1b960a44c7",
+      "name": "Delete cols3",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/{{ $('Code1').item.json.itemId }}/content?format=pdf",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3740,
+        -1140
+      ],
+      "id": "17f8f252-a1fe-4f0b-a286-8131a32547f5",
+      "name": "HTTP Request3",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.microsoft.com/v1.0/me/drive/items/{{ $('Code').item.json.itemId }}/workbook/worksheets/BOM/range(address='S:X')/delete",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"shift\": \"Left\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4200,
+        -2360
+      ],
+      "id": "c0998419-03fa-41d3-a009-864085894be2",
+      "name": "Delete Cols",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.microsoft.com/v1.0/me/drive/items/{{ $('Code1').item.json.itemId }}/workbook/worksheets/BOM/range(address='E:P')/delete",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"shift\": \"Left\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4400,
+        -1180
+      ],
+      "id": "661d1459-fdc3-4cc5-b485-06dfc447771a",
+      "name": "Delete Cols1",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.microsoft.com/v1.0/me/drive/items/{{ $('Code1').item.json.itemId }}/workbook/worksheets/BOM/range(address='G:J')/delete",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"shift\": \"Left\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4180,
+        -1180
+      ],
+      "id": "b5ef3e88-1e55-4795-86c4-84fb69c36b10",
+      "name": "Delete Cols2",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const fileId = $('Code').first().json.itemId;\nconst sheetToKeep = 'BOM';\nconst sheets = items[0].json.value;\n\nconst requests = sheets\n  .filter(sheet => sheet.name !== sheetToKeep)\n  .map((sheet, index) => ({\n    id: (index + 1).toString(), // IDs must be strings like \"1\", \"2\"\n    method: 'DELETE',\n    url: `/me/drive/items/${fileId}/workbook/worksheets/${sheet.id}`\n  }));\n\nreturn [{ json: { requests } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5060,
+        -2110
+      ],
+      "id": "8d2b0963-0de5-4ca2-96c7-8e04e3fddf4f",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.microsoft.com/v1.0/$batch",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "=workbook-session-id",
+              "value": "={{ $('create session').item.json.id }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  requests: $json[\"requests\"]\n}) }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5940,
+        -2780
+      ],
+      "id": "8585a430-ad95-4248-b109-3eafd2f6c601",
+      "name": "batch sheet delete",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/me/drive/items/{{ $('Code').item.json.itemId }}/workbook/worksheets\n",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=workbook-session-id",
+              "value": "={{ $json.value }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5280,
+        -2110
+      ],
+      "id": "4cce05e6-ddb6-4ca2-a887-b4394163f00f",
+      "name": "Get Sheet",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const fileId = $('Code1').first().json.itemId;\nconst sheetToKeep = 'BOM';\nconst sheets = items[0].json.value;\n\nconst requests = sheets\n  .filter(sheet => sheet.name !== sheetToKeep)\n  .map((sheet, index) => ({\n    id: (index + 1).toString(), // IDs must be strings like \"1\", \"2\"\n    method: 'DELETE',\n    url: `/me/drive/items/${fileId}/workbook/worksheets/${sheet.id}`\n  }));\n\nreturn [{ json: { requests } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5060,
+        -1085
+      ],
+      "id": "42e746b5-358d-4567-b34d-9816bc380617",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://graph.microsoft.com/v1.0{{ $json.url }}\n",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3740,
+        -780
+      ],
+      "id": "558d200f-1457-4b51-8cf8-c39f825e4c4f",
+      "name": "batch sheet delete1",
+      "retryOnFail": false,
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/me/drive/items/{{ $json.itemId }}/workbook/worksheets\n",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5280,
+        -1085
+      ],
+      "id": "4e0c8839-f619-4607-b2f4-39788e0c6cf7",
+      "name": "Get Sheet1",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": "016FVLFUHQ2FTAQXA2UNFJ2THRBXFXQFCF",
+        "additionalFields": {
+          "name": "(companyname0)excel.xlsx"
+        },
+        "parentReference": {}
+      },
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [
+        -5940,
+        -3560
+      ],
+      "id": "6fda4a7a-c4eb-43e2-a654-15b38c6fadf9",
+      "name": "Microsoft OneDrive3",
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": {
+          "id": "ZB0YsIkQ293BXoZz",
+          "name": "Microsoft Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/016FVLFUCBSNNL247X4BEJGEIUXHZHWZZT:/companyname-updated-technical.docx:/content",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3980,
+        -1780
+      ],
+      "id": "d851cc22-67df-4c0f-aaf3-23bba1e531d6",
+      "name": "MS File Upload",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/{{ $json.id }}/content?format=pdf",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3760,
+        -1780
+      ],
+      "id": "5dfad28b-67cb-425a-ae56-5d927546844d",
+      "name": "MS PDF download",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/016FVLFUGQK4DDR4FT2ZFZMQ6K5I2V5VDY/content",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4400,
+        -1380
+      ],
+      "id": "b78cab9f-6256-497a-b0a0-3c36cabbe188",
+      "name": "HTTP Request4",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operations": {
+          "operation": [
+            {
+              "find": "{RQ Code}",
+              "replace": "= {{ $json.text[3][1] }}"
+            },
+            {
+              "find": "{RQ Name}",
+              "replace": "={{ $json.text[4][1] }}"
+            },
+            {
+              "find": "{Client RFQ No}",
+              "replace": "={{ $json.text[5][1] }}"
+            },
+            {
+              "find": "{Exctel Proposal No.}",
+              "replace": "={{ $json.text[6][1] }}"
+            },
+            {
+              "find": "{Company Name}",
+              "replace": "={{ $json.text[2][1] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-docx-genie-pro.docxFindReplace",
+      "typeVersion": 1,
+      "position": [
+        -4180,
+        -1380
+      ],
+      "id": "29ed27f5-5b4a-4bd4-9f06-4ccc9a6891d7",
+      "name": "DOCX Find & Replace1"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/016FVLFUCBSNNL247X4BEJGEIUXHZHWZZT:/companyname-updated-technical.docx:/content",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3960,
+        -1380
+      ],
+      "id": "a6338d46-4ffb-48d2-9f7f-86f493a9a97c",
+      "name": "MS File Upload1",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/{{ $json.id }}/content?format=pdf",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3740,
+        -1380
+      ],
+      "id": "0e62c59f-00d2-41b9-b249-93f473531a8f",
+      "name": "MS PDF download1",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://graph.microsoft.com/v1.0/drives/b!MlKpd1ie3UGSaCQ7JqhhvgANnIEq7NhHgiz6t-hvjgO3BZtxrkPDT40x9zoKV81m/items/016FVLFUHQ2FTAQXA2UNFJ2THRBXFXQFCF/workbook/worksheets('Data')/range(address='A1:B50')",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -5060,
+        -1535
+      ],
+      "id": "3701279d-5f29-4ee5-9498-1d55b8f5fa36",
+      "name": "HTTP Request1",
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operations": {
+          "operation": [
+            {
+              "find": "{RQ Code}",
+              "replace": "= {{ $json.text[3][1] }}"
+            },
+            {
+              "find": "{RQ Name}",
+              "replace": "={{ $json.text[4][1] }}"
+            },
+            {
+              "find": "{Client RFQ No}",
+              "replace": "={{ $json.text[5][1] }}"
+            },
+            {
+              "find": "{Exctel Proposal No.}",
+              "replace": "={{ $json.text[6][1] }}"
+            },
+            {
+              "find": "{Company Name}",
+              "replace": "={{ $json.text[2][1] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-docx-genie-pro.docxFindReplace",
+      "typeVersion": 1,
+      "position": [
+        -4200,
+        -1780
+      ],
+      "id": "abd1fb1e-5c78-424c-bf53-487fa77e581c",
+      "name": "DOCX Find & Replace2"
+    },
+    {
+      "parameters": {
+        "batchSize": "=1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -4180,
+        -880
+      ],
+      "id": "a2f00e1c-e640-4b7b-a4f5-666278436818",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "requests",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -4400,
+        -880
+      ],
+      "id": "f082ad30-8d39-494e-a0b1-b98cc9c3c5a4",
+      "name": "Split Out",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3960,
+        -940
+      ],
+      "id": "bc026694-477a-441f-b6fd-91b8fddba1fe",
+      "name": "Wait1",
+      "webhookId": "cc29f639-7674-4116-96db-4034eee360ee"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://graph.microsoft.com/v1.0{{ $json.url }}\n",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftExcelOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3760,
+        -2040
+      ],
+      "id": "768b0507-3603-4224-bc6e-dd5f223b1d3a",
+      "name": "batch sheet delete2",
+      "retryOnFail": false,
+      "credentials": {
+        "microsoftExcelOAuth2Api": {
+          "id": "AkjujE2TVGsCHeEW",
+          "name": "Microsoft Excel account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "batchSize": "=1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -4200,
+        -2040
+      ],
+      "id": "8889e152-5d75-4b01-8c64-fcc01debc1ac",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "requests",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -4420,
+        -2040
+      ],
+      "id": "848c41d1-317d-4708-a72f-b1972f690264",
+      "name": "Split Out1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3980,
+        -2120
+      ],
+      "id": "ef895ae0-6a4b-432e-b798-db8fc4b1818a",
+      "name": "Wait",
+      "webhookId": "cc29f639-7674-4116-96db-4034eee360ee"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -3980,
+        -2320
+      ],
+      "id": "b3bb2c9d-1a91-451d-a505-24b1db7bf7cb",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -3960,
+        -1140
+      ],
+      "id": "93900dcb-9b2a-417d-907a-db3640b95d3a",
+      "name": "Merge3"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-24T13:41:53.099Z",
+      "updatedAt": "2025-05-24T13:41:53.099Z",
+      "id": "Bxij2efUKjkK7ExO",
+      "name": "EXCTEL"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-10T15:05:32.813Z",
+  "versionId": "318d027c-8551-448c-8c9d-979e01d09f02"
+}
