@@ -1,0 +1,264 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-14T06:22:47.716Z",
+  "id": "qUCVgXlax0sDRoWZ",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RFQ Price aggregator",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Name of supplier"
+            },
+            {
+              "name": "Material"
+            },
+            {
+              "name": "Quantity"
+            },
+            {
+              "name": "Quality "
+            },
+            {
+              "name": "Price"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6acfdd22-482d-468d-9532-b5a046a77961",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Incoming Data Structure:\n\n{\n  \"Name of supplier\": \"{{ $json['Name of supplier'] }}\",\n  \"Material\": \"{{ $json.Material }}\",\n  \"Quantity\": \"{{ $json.Quantity }}\",\n  \"Quality\": \"{{ $json['Quality '] }}\",\n  \"Price\": \"{{ $json.Price }}\"\n}\nObjective:\nAutomatically evaluate supplier submissions and update the master Price Sheet in Google Sheets, incorporating a calculated score to assist with supplier assessment and procurement decisions.\n\n✅ Score Calculation Logic\nThe Supplier Score (0–1) is determined using a weighted scoring formula based on:\n\nQuality – Normalized to a value between 0 and 1\n\nQuantity – Normalized (based on expected min-max scale)\n\nPrice – Inversely normalized (lower prices = higher score)\n\nSample Formula:\n\n\nscore = (w1 * normalized_quality) + (w2 * normalized_quantity) + (w3 * (1 - normalized_price))\nExample Weights:\n\nw1 = 0.5 (Quality - highest priority)\n\nw2 = 0.3 (Quantity)\n\nw3 = 0.2 (Price)\n\nYou can adjust these weights based on your operational priorities.",
+        "options": {
+          "systemMessage": "You are a Price aggregator we need to create a list of things."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        220,
+        0
+      ],
+      "id": "574aaa8a-32a0-4e1d-91a4-85faaff15df8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        200
+      ],
+      "id": "24767fa1-cf3b-41ba-88bf-838e995c4344",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kYMWduOenOVn8Iv6",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1xtd-CkMOKt7IV53b3dA2qcoJygBEtsvzd-GZMqmfEns/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xtd-CkMOKt7IV53b3dA2qcoJygBEtsvzd-GZMqmfEns/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Supplier ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Supplier_', ``, 'string') }}",
+            "Material Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Material_Name', ``, 'string') }}",
+            "Quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Quantity', ``, 'string') }}",
+            "Price": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Price', ``, 'string') }}",
+            "Score": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Score', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Supplier "
+          ],
+          "schema": [
+            {
+              "id": "Supplier ",
+              "displayName": "Supplier ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Material Name",
+              "displayName": "Material Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        460,
+        260
+      ],
+      "id": "7b53ffd4-07ac-415d-8594-44318c9260f0",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XPM8PoU3XhHY2BSd",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        360,
+        280
+      ],
+      "id": "025529d4-5eb1-4939-948e-99b583baf7e2",
+      "name": "Calculator"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Name of supplier": "Aqqc",
+          "Material": "Cement",
+          "Quantity": "1 unit",
+          "Quality ": "Good",
+          "Price": "2000 rs"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T18:45:25.922Z",
+      "updatedAt": "2025-05-13T18:45:25.922Z",
+      "id": "mjEow6YbIOm7nrey",
+      "name": "RFQ"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-14T07:41:50.759Z",
+  "versionId": "1e3b4931-4799-47e6-8fa8-3a7afa4d304a"
+}
