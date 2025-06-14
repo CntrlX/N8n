@@ -1,0 +1,196 @@
+{
+  "active": false,
+  "connections": {
+    "Notion Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "GoogleDocs create tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GoogleDocs update tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-05T12:41:57.878Z",
+  "id": "rBbxTMAqer5u8TkG",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "BRD Maker",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "databaseId": {
+          "__rl": true,
+          "value": "1ea4e09c-ffcc-809e-8c8e-fcf9c2eade8a",
+          "mode": "list",
+          "cachedResultName": "tsdasd",
+          "cachedResultUrl": "https://www.notion.so/1ea4e09cffcc809e8c8efcf9c2eade8a"
+        }
+      },
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "39e80056-c96b-4a3c-b7c5-cc6748bdddf5",
+      "name": "Notion Trigger",
+      "credentials": {
+        "notionApi": {
+          "id": "NLSxN00mC72MGGMn",
+          "name": "Notion account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Name }} this will be the company name,{{ $json.Description }} this is the description of what the app we want. you have to create the text for the brd. create using the GoogleDocs create tool and update the brd using the GoogleDocs update tool\n",
+        "options": {
+          "systemMessage": "You are a helpful assistant createing a BRD document for our company providing to a company, create and update the brd using the google docs tool"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        220,
+        0
+      ],
+      "id": "20976eec-5c7a-4195-b4b6-6c2768e51d47",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -140,
+        340
+      ],
+      "id": "3f529942-f9fd-4ae9-b855-86a27030b04f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "UFtmkY9ckjaL1yZu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "driveId": "sharedWithMe",
+        "folderId": "1zBGTYrxrhVyKE8xXEO3De95W8Npqa8FA",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        480,
+        220
+      ],
+      "id": "96a827c8-460b-491c-976d-0443536007d0",
+      "name": "GoogleDocs create tool",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_Text', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        300,
+        220
+      ],
+      "id": "5553b3fc-f1bc-4b62-85bc-0bb722a6474a",
+      "name": "GoogleDocs update tool",
+      "credentials": {
+        "googleApi": {
+          "id": "ZCzQBE0Vi5HE4oeV",
+          "name": "Google Service Account account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-05-09T15:05:14.682Z",
+  "versionId": "892b6c46-5e85-41a0-a816-f171a1b96d14"
+}
