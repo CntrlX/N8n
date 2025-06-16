@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "On clicking 'execute'": {
       "main": [
@@ -261,7 +261,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow 3",
+  "name": "N8n Backup",
   "nodes": [
     {
       "parameters": {},
@@ -715,7 +715,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
         400,
-        -460
+        -380
       ],
       "typeVersion": 1.2
     },
@@ -813,9 +813,13 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-06-14T03:02:17.287Z",
-  "versionId": "005d4ac5-bdbd-4381-9484-2f146e935347"
+  "triggerCount": 1,
+  "updatedAt": "2025-06-15T14:53:47.236Z",
+  "versionId": "ef422fca-0053-4c4e-8a23-6805223d9d95"
 }
